@@ -1,0 +1,16 @@
+body{
+    font-family:Arial;
+    padding:20px;
+    text-align:center
+} 
+.item{
+    display:flex;
+    justify-content:space-between;
+    border:1px solid #ddd;
+    padding:10px;
+    margin:5px;
+    border-radius:8px
+} 
+button{
+    padding:5px 10px
+}
