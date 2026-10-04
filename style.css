@@ -1,6 +1,6 @@
 body{
     font-family:Arial;
-    padding:20px;
+    padding:0px;
     text-align:center
 } 
 .item{
@@ -13,4 +13,11 @@ body{
 } 
 button{
     padding:5px 10px
+}
+
+.headerNav{
+    background-color: #1db91d;
+}
+.nav-item{
+    color: white !important;
 }
