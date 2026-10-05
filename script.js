@@ -35,31 +35,39 @@ function mostrar(){
  document.getElementById("total").innerText= total>0 ? `TOTAL: $${total}` : "";
 }
 
+
 async function comprar(){
  if(carrito.length==0) return alert("Carrito vacío");
- let nombre=prompt("Tu nombre?"); let tel=prompt("Tu WhatsApp?");
+ let nombre=prompt("Tu nombre?"); 
+ let tel=prompt("Tu WhatsApp");
+ if(!nombre || !tel) return;
  let total=carrito.reduce((s,p)=>s+p.precio*p.cant,0);
  let prod=carrito.map(p=>`${p.nombre} x${p.cant}`).join(", ");
+ 
+ // guardar en supabase
+ await fetch(SUPABASE_URL+"/rest/v1/pedidos",{
+   method:"POST",
+   headers:{
+     "apikey":SUPABASE_KEY,
+     "Authorization":"Bearer "+SUPABASE_KEY,
+     "Content-Type":"application/json",
+     "Prefer":"return=minimal"
+   },
+   body:JSON.stringify({nombre,telefono:tel,producto:prod,total})
+ });
 
- const res = await fetch(SUPABASE_URL+"/rest/v1/pedidos",{
-  method:"POST",
-  headers:{
-    "apikey":SUPABASE_KEY,
-    "Authorization":"Bearer "+SUPABASE_KEY,
-    "Content-Type":"application/json",
-    "Prefer": "return=minimal"
-  },
-  body:JSON.stringify({nombre,telefono:tel,producto:prod,total})
-});
-if(!res.ok){
-  const txt = await res.text();
-  console.log(txt);
-  return alert("Error Supabase: "+txt);
-}
- let paraTi=`NUEVO PEDIDO%0A${prod}%0ATotal: $${total}%0ACliente: ${nombre}%0ATel: ${tel}`;
- let paraCliente=`Hola ${nombre}! Pedido recibido: ${prod} Total $${total}.`;
- window.open(`https://wa.me/${MI_NUMERO}?text=${paraTi}`,"_blank");
- setTimeout(()=>window.open(`https://wa.me/${tel}?text=${encodeURIComponent(paraCliente)}`,"_blank"),1000);
+ // limpiar numero de telefono
+ let telLimpio = tel.replace(/\D/g,'');
+ 
+ let paraTi=`NUEVO PEDIDO\n${prod}\nTotal: $${total}\nCliente: ${nombre}\nTel: ${tel}`;
+ let paraCliente=`Hola ${nombre}! Gracias por tu pedido Herbalife MIRI: ${prod} Total $${total}. En breve te confirmo el envío.`;
+
+ // solo abre TU whatsapp, el del cliente ya lo tienes en Supabase
+ window.location.href = `https://wa.me/${MI_NUMERO}?text=${encodeURIComponent(paraTi)}`;
+
+ // opcional: después puedes reenviarle al cliente manualmente desde tu whats
+ // Si quieres que le llegue automático al cliente, copia este link y mandaselo:
+ console.log(`https://wa.me/${telLimpio}?text=${encodeURIComponent(paraCliente)}`);
+
  localStorage.removeItem("carrito"); carrito=[]; mostrar();
 }
-mostrar();
