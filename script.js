@@ -10,7 +10,7 @@ function limpiarNumero(num){
   return n;
 }
 
-const MI_NUMERO=limpiarNumero("521556436020"); // quedará como 52556436020
+const MI_NUMERO=limpiarNumero("5215564356020"); // quedará como 52556436020
 let carrito = JSON.parse(localStorage.getItem("carrito")||"[]");
 
 function agregar(nombre,precio){
