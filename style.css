@@ -19,5 +19,35 @@ button{
     background-color: #1db91d;
 }
 .nav-item{
+    text-decoration: none;
+}
+.LogoH{
+    width: 30%;
+    padding-left: 4%;
+    padding-bottom: 5%;
+}
+.headerNavH{
+    padding-top: 20px;
+}
+a{
     color: white !important;
+}
+.text-h1{
+    color: #1db91d;
+}
+.img-tectH{
+    width: 50%;
+}
+.img-barH{
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+.carousel-item img {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+}
+.txt-m{
+   color: #ddd;
 }
