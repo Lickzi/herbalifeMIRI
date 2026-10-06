@@ -31,40 +31,259 @@ function guardar(){
  localStorage.setItem("carrito",JSON.stringify(carrito));
  mostrar();
 }
+
+
 function mostrar(){
- let html=""; let total=0;
- carrito.forEach(p=>{
-  total+=p.precio*p.cant;
-  html+=`<div class="item"><span>${p.nombre} $${p.precio}</span><span><button onclick="restar('${p.nombre}')">-</button> ${p.cant} <button onclick="agregar('${p.nombre}',${p.precio})">+</button> <button onclick="quitar('${p.nombre}')">🗑️</button></span></div>`;
- });
- document.getElementById("carrito").innerHTML= html || "Carrito vacío";
- document.getElementById("total").innerText= total>0 ? `TOTAL: $${total}` : "";
+
+    let html = "";
+    let total = 0;
+    let cantidadTotal = 0;
+
+    carrito.forEach(p => {
+
+        total += p.precio * p.cant;
+
+        cantidadTotal += p.cant;
+
+        html += `
+        <div class="item">
+
+            <span>
+                ${p.nombre} 
+                $${p.precio}
+            </span>
+
+            <span>
+
+                <button onclick="restar('${p.nombre}')">
+                    -
+                </button>
+
+                ${p.cant}
+
+                <button onclick="agregar('${p.nombre}',${p.precio})">
+                    +
+                </button>
+
+                <button onclick="quitar('${p.nombre}')">
+                    🗑️
+                </button>
+
+            </span>
+
+        </div>
+        `;
+    });
+
+
+    // Lista de productos
+    document.getElementById("carrito").innerHTML =
+        html || "Carrito vacío";
+
+
+    // Total
+    document.getElementById("total").innerText =
+        total > 0 ? `TOTAL: $${total}` : "";
+
+
+    // CONTADOR DEL ICONO
+    document.getElementById("contadorCarrito").innerText =
+        cantidadTotal;
+
 }
 
-async function comprar(){
- if(carrito.length==0) return alert("Carrito vacío");
- let nombre=prompt("Tu nombre?"); 
- let tel=prompt("Tu WhatsApp? ej 55 1234 5678");
- if(!nombre || !tel) return;
- let total=carrito.reduce((s,p)=>s+p.precio*p.cant,0);
- let prod=carrito.map(p=>`${p.nombre} x${p.cant}`).join(", ");
- 
- await fetch(SUPABASE_URL+"/rest/v1/pedidos",{
-   method:"POST",
-   headers:{
-     "apikey":SUPABASE_KEY,
-     "Authorization":"Bearer "+SUPABASE_KEY,
-     "Content-Type":"application/json",
-     "Prefer":"return=minimal"
-   },
-   body:JSON.stringify({nombre,telefono:tel,producto:prod,total})
- });
+function comprar(){
 
- let telLimpio = limpiarNumero(tel);
- let paraTi=`NUEVO PEDIDO\n${prod}\nTotal: $${total}\nCliente: ${nombre}\nTel: ${telLimpio}`;
- 
- window.location.href = `https://wa.me/${MI_NUMERO}?text=${encodeURIComponent(paraTi)}`;
+    const hayProductos = carrito.some(p => p.cant > 0);
 
- localStorage.removeItem("carrito"); carrito=[]; mostrar();
+    if(!hayProductos){
+
+        mostrarMensaje(
+            "Carrito vacío",
+            "Agrega algún producto antes de realizar tu pedido."
+        );
+
+        return;
+    }
+
+    const modal = new bootstrap.Modal(
+        document.getElementById("modalCompra")
+    );
+
+    modal.show();
 }
-mostrar();
+
+async function confirmarCompra(){
+
+    const nombreInput =
+        document.getElementById("nombreCliente");
+
+    const telefonoInput =
+        document.getElementById("telefonoCliente");
+
+
+    const nombre = nombreInput.value.trim();
+
+    const telefono = telefonoInput.value.trim();
+
+
+    // Quitar estados anteriores
+
+    nombreInput.classList.remove("is-valid", "is-invalid");
+
+    telefonoInput.classList.remove("is-valid", "is-invalid");
+
+
+    // VALIDAR NOMBRE
+
+    if(!validarNombre(nombre)){
+
+        nombreInput.classList.add("is-invalid");
+
+        nombreInput.focus();
+
+        return;
+    }
+
+    nombreInput.classList.add("is-valid");
+
+
+    // VALIDAR TELÉFONO
+
+    if(!validarTelefono(telefono)){
+
+        telefonoInput.classList.add("is-invalid");
+
+        telefonoInput.focus();
+
+        return;
+    }
+
+    telefonoInput.classList.add("is-valid");
+
+
+    // AQUÍ CONTINÚA TU CÓDIGO DE COMPRA
+
+if(!tel){
+
+    mostrarMensaje(
+        "Falta tu WhatsApp",
+        "Por favor escribe tu número de WhatsApp para continuar."
+    );
+
+    return;
+}
+
+    let total = carrito.reduce(
+        (s,p) => s + p.precio * p.cant,
+        0
+    );
+
+
+    let prod = carrito
+        .map(p => `${p.nombre} x${p.cant}`)
+        .join(", ");
+
+
+    await fetch(SUPABASE_URL+"/rest/v1/pedidos",{
+
+        method:"POST",
+
+        headers:{
+            "apikey":SUPABASE_KEY,
+            "Authorization":"Bearer "+SUPABASE_KEY,
+            "Content-Type":"application/json",
+            "Prefer":"return=minimal"
+        },
+
+        body:JSON.stringify({
+            nombre,
+            telefono:tel,
+            producto:prod,
+            total
+        })
+
+    });
+
+
+    let telLimpio = limpiarNumero(tel);
+
+
+    let paraTi =
+`NUEVO PEDIDO
+${prod}
+Total: $${total}
+Cliente: ${nombre}
+Tel: ${telLimpio}`;
+
+
+    window.location.href =
+        `https://wa.me/${MI_NUMERO}?text=${encodeURIComponent(paraTi)}`;
+
+
+    localStorage.removeItem("carrito");
+
+    carrito = [];
+
+    mostrar();
+}
+
+
+function abrirCarrito(){
+
+    document
+        .getElementById("panelCarrito")
+        .classList.add("abierto");
+
+}
+
+
+function cerrarCarrito(){
+
+    document
+        .getElementById("panelCarrito")
+        .classList.remove("abierto");
+
+}
+
+
+function mostrarMensaje(titulo, mensaje){
+
+    document.getElementById("tituloMensaje").innerText = titulo;
+
+    document.getElementById("textoMensaje").innerText = mensaje;
+
+    const modal = new bootstrap.Modal(
+        document.getElementById("modalMensaje")
+    );
+
+    modal.show();
+}
+mostrarMensaje(
+    "Carrito vacío",
+    "Agrega algún producto antes de realizar tu pedido."
+);
+
+
+function validarNombre(nombre){
+
+    nombre = nombre.trim();
+
+    // Mínimo 3 caracteres
+    if(nombre.length < 3){
+        return false;
+    }
+
+    // Solo letras, espacios, acentos y ñ
+    const regex = /^[A-Za-zÁÉÍÓÚáéíóúÑñÜü\s]+$/;
+
+    return regex.test(nombre);
+}
+function validarTelefono(telefono){
+
+    // Elimina espacios, guiones, paréntesis, etc.
+    let numero = telefono.replace(/\D/g, "");
+
+    // México: 10 dígitos
+    return numero.length === 10;
+}

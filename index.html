@@ -4,6 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mi Tienda</title>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
 <body>
@@ -14,8 +15,8 @@
         <span class="col-2">
           <img class="LogoH" src="https://imgs.search.brave.com/qecKKHUHI_vRuAXjqeXkMWmPUlhtwLI37YdsKUPyM_c/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9vLWxl/dHJhLWxvZ28tYyVD/MyVBRHJjdWxvLW5h/dHVyYWxlemEtaG9q/YS1kZS1kaXNlJUMz/JUIxby1ib3QlQzMl/QTFuaWNvLWZsb3Jh/bC1jb24taWNvbm8t/ZGVsLWxhLWluaWNp/YWwtJUMzJUFEY29u/by1wYXJhLWVsLW5l/Z29jaW8tMTg4NDMw/NzgzLmpwZw">
         </span>
-      <div class="col-10">
-        <ul class="nav justify-content-end">
+        <div class="col-9">
+          <ul class="nav justify-content-end">
        <li class="nav-item">
          <a class="nav-link active" href="#">malteadas y batidos proteicos</a>
        </li>
@@ -34,12 +35,41 @@
         <li class="nav-item">
          <a class="nav-link" href="#">Concentracion de aloe</a>
        </li>
-     </ul>
-      </div>
-       
+          </ul>
+        </div>
+        <div class="col-1">
+           <div class="carrito-icono" onclick="abrirCarrito()">
+    
+            <i class="fa-solid fa-cart-shopping carritoH"></i>
+            
+            <span id="contadorCarrito">0</span>
+
+           </div>
+        </div>       
       </div>
     </div>
 </header>
+
+<div id="panelCarrito" class="panel-carrito">
+
+    <div class="cabecera-carrito">
+        <h3>Mi carrito</h3>
+
+        <button onclick="cerrarCarrito()">✕</button>
+    </div>
+
+    <div id="carrito">
+        Carrito vacío
+    </div>
+
+    <div id="total"></div>
+
+    <button onclick="comprar()" class="btn-comprar">
+        Realizar pedido
+    </button>
+
+</div>
+
 <main>
 <div class="container mt-5">
   <div class="row">
@@ -103,7 +133,7 @@
 
 <div class="row mt-4 mb-5">
   <h3 class="text-h1 mb-4">Productos</h3>
-  <div class="card col-3 ms-4" style="width: 18rem;">
+  <div class="card col-3 ms-4 mb-4" style="width: 18rem;">
   <img src="./img/b83fa308a7d1f8f2b1f574ceb7ab946a.jpg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">Card title</h5>
@@ -112,7 +142,7 @@
     <button class="btn btn-primary" onclick="agregar('batidos',100)">$100</button>
   </div>
   </div>
-  <div class="card col-3 ms-4" style="width: 18rem;">
+  <div class="card col-3 ms-4 mb-4" style="width: 18rem;">
   <img src="./img/70aa2a4db7f990373ca9c376323e3dea.jpeg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">Card title</h5>
@@ -120,7 +150,32 @@
      <button class="btn btn-primary" onclick="agregar('malteadas',400)">$400</button>
   </div>
   </div>
-  <div class="card col-3 ms-4" style="width: 18rem;">
+  <div class="card col-3 ms-4 mb-4" style="width: 18rem;">
+  <img src="./img/cdeba0e0c4d2dd703ba8be3a972e21fb.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <button class="btn btn-primary" onclick="agregar('cerelaes',200)">$200</button>
+  </div>
+  </div>
+  <div class="card col-3 ms-4 mb-4" style="width: 18rem;">
+  <img src="./img/b83fa308a7d1f8f2b1f574ceb7ab946a.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    
+    <button class="btn btn-primary" onclick="agregar('batidos',100)">$100</button>
+  </div>
+  </div>
+  <div class="card col-3 ms-4 mb-4" style="width: 18rem;">
+  <img src="./img/70aa2a4db7f990373ca9c376323e3dea.jpeg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+     <button class="btn btn-primary" onclick="agregar('malteadas',400)">$400</button>
+  </div>
+  </div>
+  <div class="card col-3 ms-4 mb-4" style="width: 18rem;">
   <img src="./img/cdeba0e0c4d2dd703ba8be3a972e21fb.jpg" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">Card title</h5>
@@ -131,13 +186,153 @@
 </div>
 
 </main>
+<div class="modal fade" id="modalCompra" tabindex="-1" aria-hidden="true">
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title">
+          Finalizar pedido
+        </h5>
+
+        <button 
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal">
+        </button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <p class="text-muted">
+          Ingresa tus datos para continuar con tu pedido.
+        </p>
 
 
+        <!-- NOMBRE -->
 
-<h3 class="text-h1">Carrito</h3>
-<div id="carrito"></div>
-<h3 id="total"></h3>
-<button onclick="comprar()" style="background:black;color:white;padding:12px 25px;border:0;border-radius:8px">Comprar por WhatsApp</button>
+        <div class="mb-3">
+
+          <label for="nombreCliente" class="form-label">
+            Nombre
+          </label>
+
+          <input 
+            type="text"
+            class="form-control"
+            id="nombreCliente"
+            placeholder="Ej. Juan Pérez"
+            autocomplete="name">
+
+          <div id="errorNombre" class="invalid-feedback">
+            Escribe un nombre válido.
+          </div>
+
+        </div>
+
+
+        <!-- CELULAR -->
+
+        <div class="mb-3">
+
+          <label for="telefonoCliente" class="form-label">
+            Celular / WhatsApp
+          </label>
+
+          <input 
+            type="tel"
+            class="form-control"
+            id="telefonoCliente"
+            placeholder="55 1234 5678"
+            maxlength="10"
+            autocomplete="tel">
+
+          <div id="errorTelefono" class="invalid-feedback">
+            Escribe un número celular válido de 10 dígitos.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="modal-footer">
+
+        <button 
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal">
+
+          Cancelar
+
+        </button>
+
+        <button 
+          type="button"
+          class="btn btn-success"
+          onclick="confirmarCompra()">
+
+          Continuar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal fade" id="modalMensaje" tabindex="-1" aria-hidden="true">
+
+  <div class="modal-dialog modal-dialog-centered">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title" id="tituloMensaje">
+          Aviso
+        </h5>
+
+        <button 
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal">
+        </button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <p id="textoMensaje" class="mb-0">
+        </p>
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button 
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal">
+
+          Aceptar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
 
 <script src="./script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
