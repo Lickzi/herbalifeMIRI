@@ -12,10 +12,10 @@
 <header class="headerNav">
     <div class="conteiner">
       <div class="row headerNavH">
-        <span class="col-2">
+        <span class="col-4 col-md-2">
           <img class="LogoH" src="https://imgs.search.brave.com/qecKKHUHI_vRuAXjqeXkMWmPUlhtwLI37YdsKUPyM_c/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90aHVt/YnMuZHJlYW1zdGlt/ZS5jb20vYi9vLWxl/dHJhLWxvZ28tYyVD/MyVBRHJjdWxvLW5h/dHVyYWxlemEtaG9q/YS1kZS1kaXNlJUMz/JUIxby1ib3QlQzMl/QTFuaWNvLWZsb3Jh/bC1jb24taWNvbm8t/ZGVsLWxhLWluaWNp/YWwtJUMzJUFEY29u/by1wYXJhLWVsLW5l/Z29jaW8tMTg4NDMw/NzgzLmpwZw">
         </span>
-        <div class="col-9">
+        <div class="col-7 col-md-9">
           <ul class="nav justify-content-end">
        <li class="nav-item">
          <a class="nav-link active" href="#">malteadas y batidos proteicos</a>
@@ -74,10 +74,10 @@
 <div class="container mt-5">
   <div class="row">
     <h1 class="text-h1">BEBIDAS Y LICUADOS</h1>
-    <div class="col-6">
+    <div class="col-12 col-md-6">
      <img class="img-tectH" src="./img/Frases-para-fotos-familiares-Para-acompañar-los-mejores-momentos.jpg">
     </div>
-    <div class="col-6">
+    <div class="col-12 col-md-6">
        <div class="artiH">
         <p>
           Para nosotros, las mejores vidas son las vidas equilibradas. A través de nuestros Distribuidores y Distribuidoras Independientes de Herbalife, que fomentan el apoyo a las comunidades, el crecimiento personal y las oportunidades de negocio para prosperar, te ofrecemos una amplia gama de productos diseñados para ayudarte a satisfacer tus necesidades y alcanzar tus metas.
@@ -131,57 +131,68 @@
 </div>
 </div>
 
-<div class="row mt-4 mb-5">
+<div class="row mt-4 mb-5 g-3">
   <h3 class="text-h1 mb-4">Productos</h3>
-  <div class="card col-3 ms-4 mb-4" style="width: 18rem;">
-  <img src="./img/b83fa308a7d1f8f2b1f574ceb7ab946a.jpg" class="card-img-top" alt="...">
-  <div class="card-body">
+  <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4">
+    <div class="card h-100">        
+          <img src="./img/b83fa308a7d1f8f2b1f574ceb7ab946a.jpg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <button class="btn btn-primary" onclick="agregar('batidos',100)">$100</button>
+          </div>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4">
+    <div class="card h-100">   
+     <img src="./img/70aa2a4db7f990373ca9c376323e3dea.jpeg" class="card-img-top" alt="...">
+     <div class="card-body">
+       <h5 class="card-title">Card title</h5>
+       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <button class="btn btn-primary" onclick="agregar('malteadas',400)">$400</button>
+     </div>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4">
+    <div class="card h-100">
+           <img src="./img/cdeba0e0c4d2dd703ba8be3a972e21fb.jpg" class="card-img-top" alt="...">
+           <div class="card-body">
+             <h5 class="card-title">Card title</h5>
+             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+               <button class="btn btn-primary" onclick="agregar('cerelaes',200)">$200</button>
+           </div>
+    </div>    
+  </div>
+  <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4">
+    <div class="card h-100">       
+         <img src="./img/b83fa308a7d1f8f2b1f574ceb7ab946a.jpg" class="card-img-top" alt="...">
+         <div class="card-body">
     <h5 class="card-title">Card title</h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
     
     <button class="btn btn-primary" onclick="agregar('batidos',100)">$100</button>
+         </div>
+    </div>
   </div>
-  </div>
-  <div class="card col-3 ms-4 mb-4" style="width: 18rem;">
-  <img src="./img/70aa2a4db7f990373ca9c376323e3dea.jpeg" class="card-img-top" alt="...">
-  <div class="card-body">
+  <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4">
+    <div class="card h-100">
+         <img src="./img/70aa2a4db7f990373ca9c376323e3dea.jpeg" class="card-img-top" alt="...">
+         <div class="card-body">
     <h5 class="card-title">Card title</h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
      <button class="btn btn-primary" onclick="agregar('malteadas',400)">$400</button>
+         </div>
+    </div>
   </div>
-  </div>
-  <div class="card col-3 ms-4 mb-4" style="width: 18rem;">
-  <img src="./img/cdeba0e0c4d2dd703ba8be3a972e21fb.jpg" class="card-img-top" alt="...">
-  <div class="card-body">
+  <div class="col-12 col-sm-6 col-lg-4 col-xl-3 mb-4">
+    <div class="card h-100">
+           <img src="./img/cdeba0e0c4d2dd703ba8be3a972e21fb.jpg" class="card-img-top" alt="...">
+           <div class="card-body">
     <h5 class="card-title">Card title</h5>
     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
       <button class="btn btn-primary" onclick="agregar('cerelaes',200)">$200</button>
-  </div>
-  </div>
-  <div class="card col-3 ms-4 mb-4" style="width: 18rem;">
-  <img src="./img/b83fa308a7d1f8f2b1f574ceb7ab946a.jpg" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    
-    <button class="btn btn-primary" onclick="agregar('batidos',100)">$100</button>
-  </div>
-  </div>
-  <div class="card col-3 ms-4 mb-4" style="width: 18rem;">
-  <img src="./img/70aa2a4db7f990373ca9c376323e3dea.jpeg" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-     <button class="btn btn-primary" onclick="agregar('malteadas',400)">$400</button>
-  </div>
-  </div>
-  <div class="card col-3 ms-4 mb-4" style="width: 18rem;">
-  <img src="./img/cdeba0e0c4d2dd703ba8be3a972e21fb.jpg" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <button class="btn btn-primary" onclick="agregar('cerelaes',200)">$200</button>
-  </div>
+           </div>
+    </div>
   </div>
 </div>
 
