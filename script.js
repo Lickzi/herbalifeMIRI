@@ -11,7 +11,8 @@ function limpiarNumero(num){
 }
 
 const MI_NUMERO=limpiarNumero("5215564355876"); // quedará como 52556436020
-let carrito = JSON.parse(localStorage.getItem("carrito")||"[]");
+localStorage.removeItem("carrito");
+let carrito = [];
 
 function agregar(nombre,precio){
  let e=carrito.find(p=>p.nombre==nombre);
@@ -94,18 +95,23 @@ function mostrar(){
 
 function comprar(){
 
+    // Cerrar el panel del carrito primero
+    cerrarCarrito();
+
+    // Revisar si realmente hay productos
     const hayProductos = carrito.some(p => p.cant > 0);
 
     if(!hayProductos){
 
         mostrarMensaje(
             "Carrito vacío",
-            "Agrega algún producto antes de realizar tu pedido."
+            "Agrega al menos un producto antes de realizar tu pedido."
         );
 
         return;
     }
 
+    // Si sí hay productos, abrir formulario
     const modal = new bootstrap.Modal(
         document.getElementById("modalCompra")
     );
@@ -259,6 +265,7 @@ function mostrarMensaje(titulo, mensaje){
 
     modal.show();
 }
+
 mostrarMensaje(
     "Carrito vacío",
     "Agrega algún producto antes de realizar tu pedido."
