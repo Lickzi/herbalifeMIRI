@@ -244,13 +244,45 @@ main {
 
     /* HEADER */
 
-    .headerNav .nav {
-        display: none;
-    }
-
-    .LogoH {
-        width: 65px;
-        padding-left: 0;
+   .headerNavH { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    width: 100%; 
+    padding: 10px 10px; 
+} 
+/* Logo completamente a la izquierda */ 
+.headerNavH > .col-2 { 
+    width: auto; 
+    padding: 0; 
+    margin: 0; 
+} 
+.LogoH {
+     width: 65px; 
+     padding: 0; 
+     display: block; 
+    } 
+    /* Ocultar menú */ 
+.headerNavH > .col-9 {
+     display: none; 
+} 
+/* Carrito completamente a la derecha */ 
+.headerNavH > .col-1 {
+     width: auto; 
+     padding: 0; 
+     margin-left: auto; 
+} 
+.carrito-icono {
+     font-size: 23px;
+      margin: 0;
+       position: relative; 
+    } 
+#contadorCarrito { 
+    width: 19px; 
+    height: 19px; 
+    font-size: 11px;
+     top: -9px; 
+     right: -10px; 
     }
 
 
