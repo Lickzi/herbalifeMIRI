@@ -119,121 +119,107 @@ function comprar(){
     modal.show();
 }
 
-async function confirmarCompra(){
+async function confirmarCompra() {
 
-    const nombreInput =
-        document.getElementById("nombreCliente");
-
-    const telefonoInput =
-        document.getElementById("telefonoCliente");
-
+    const nombreInput = document.getElementById("nombreCliente");
+    const telefonoInput = document.getElementById("telefonoCliente");
 
     const nombre = nombreInput.value.trim();
-
     const telefono = telefonoInput.value.trim();
 
-
-    // Quitar estados anteriores
-
-    nombreInput.classList.remove("is-valid", "is-invalid");
-
-    telefonoInput.classList.remove("is-valid", "is-invalid");
-
-
-    // VALIDAR NOMBRE
-
-    if(!validarNombre(nombre)){
-
+    // Validar nombre
+    if (nombre.length < 3) {
         nombreInput.classList.add("is-invalid");
-
-        nombreInput.focus();
-
         return;
+    } else {
+        nombreInput.classList.remove("is-invalid");
+        nombreInput.classList.add("is-valid");
     }
 
-    nombreInput.classList.add("is-valid");
+    // Validar teléfono
+    const telefonoLimpio = telefono.replace(/\D/g, "");
 
-
-    // VALIDAR TELÉFONO
-
-    if(!validarTelefono(telefono)){
-
+    if (telefonoLimpio.length !== 10) {
         telefonoInput.classList.add("is-invalid");
-
-        telefonoInput.focus();
-
         return;
+    } else {
+        telefonoInput.classList.remove("is-invalid");
+        telefonoInput.classList.add("is-valid");
     }
 
-    telefonoInput.classList.add("is-valid");
-
-
-    // AQUÍ CONTINÚA TU CÓDIGO DE COMPRA
-
-if(!tel){
-
-    mostrarMensaje(
-        "Falta tu WhatsApp",
-        "Por favor escribe tu número de WhatsApp para continuar."
-    );
-
-    return;
-}
-
-    let total = carrito.reduce(
-        (s,p) => s + p.precio * p.cant,
+    // Calcular total
+    const total = carrito.reduce(
+        (s, p) => s + p.precio * p.cant,
         0
     );
 
-
-    let prod = carrito
+    // Crear lista de productos
+    const prod = carrito
         .map(p => `${p.nombre} x${p.cant}`)
         .join(", ");
 
+    try {
 
-    await fetch(SUPABASE_URL+"/rest/v1/pedidos",{
+        // Guardar pedido en Supabase
+        const respuesta = await fetch(
+            SUPABASE_URL + "/rest/v1/pedidos",
+            {
+                method: "POST",
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Authorization": "Bearer " + SUPABASE_KEY,
+                    "Content-Type": "application/json",
+                    "Prefer": "return=minimal"
+                },
+                body: JSON.stringify({
+                    nombre: nombre,
+                    telefono: telefonoLimpio,
+                    producto: prod,
+                    total: total
+                })
+            }
+        );
 
-        method:"POST",
+        // Si Supabase devuelve error
+        if (!respuesta.ok) {
+            throw new Error("No se pudo guardar el pedido.");
+        }
 
-        headers:{
-            "apikey":SUPABASE_KEY,
-            "Authorization":"Bearer "+SUPABASE_KEY,
-            "Content-Type":"application/json",
-            "Prefer":"return=minimal"
-        },
+        // Mensaje que recibirá tu WhatsApp
+        const paraTi =
+            `NUEVO PEDIDO\n` +
+            `${prod}\n` +
+            `Total: $${total}\n` +
+            `Cliente: ${nombre}\n` +
+            `Tel: ${telefonoLimpio}`;
 
-        body:JSON.stringify({
-            nombre,
-            telefono:tel,
-            producto:prod,
-            total
-        })
+        // Cerrar modal de datos
+        const modalElement = document.getElementById("modalCompra");
+        const modal = bootstrap.Modal.getInstance(modalElement);
 
-    });
+        if (modal) {
+            modal.hide();
+        }
 
+        // Vaciar carrito
+        localStorage.removeItem("carrito");
+        carrito = [];
+        mostrar();
 
-    let telLimpio = limpiarNumero(tel);
+        // Abrir WhatsApp
+        window.location.href =
+            `https://wa.me/${MI_NUMERO}?text=${encodeURIComponent(paraTi)}`;
 
+    } catch (error) {
 
-    let paraTi =
-`NUEVO PEDIDO
-${prod}
-Total: $${total}
-Cliente: ${nombre}
-Tel: ${telLimpio}`;
+        console.error(error);
 
-
-    window.location.href =
-        `https://wa.me/${MI_NUMERO}?text=${encodeURIComponent(paraTi)}`;
-
-
-    localStorage.removeItem("carrito");
-
-    carrito = [];
-
-    mostrar();
+        mostrarMensaje(
+            "Error",
+            "No se pudo enviar el pedido. Intenta nuevamente."
+        );
+    }
 }
-
 
 function abrirCarrito(){
 
